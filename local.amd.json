@@ -1,0 +1,6 @@
+{
+    "paths": {
+        "tide": ".",
+        "tide/src": "Tide-Amber/src"
+    }
+}
