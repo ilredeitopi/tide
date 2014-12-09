@@ -1,6 +1,6 @@
 {
     "paths": {
-        "tide": "support",
-        "tide_core": "Tide-Amber/src"
+        "tide_lib": "support",
+        "tide": "Tide-Amber/src"
     }
 }
