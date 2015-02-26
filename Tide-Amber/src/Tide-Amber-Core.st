@@ -29,11 +29,11 @@ client: aClient
 !
 
 connectOn: aPath
-	"Creates a proxy on aPath and connect it. 
+	"Creates a proxy on aPath and connect it.
 	 This is a convenience method."
-	 
-	^ (self on: aPath) 
-		connect; 
+
+	^ (self on: aPath)
+		connect;
 		yourself.
 !
 
@@ -87,14 +87,14 @@ inspectOn: anInspector
 !TDClientProxy methodsFor: 'printing'!
 
 printOn: aStream
-	self xxxClient path 
-		ifNil: [ 
-			aStream 
+	self xxxClient path
+		ifNil: [
+			aStream
 				nextPutAll: 'a proxy on <';
 				nextPutAll: self tidePresenterString;
 				nextPutAll: '>' ]
-		ifNotNil: [ 
-			aStream 
+		ifNotNil: [
+			aStream
 				nextPutAll: 'a proxy on path "';
 				nextPutAll: self xxxClient path;
 				nextPutAll: '"' ]
@@ -112,11 +112,11 @@ client: aClient
 !
 
 connectOn: aPath
-	"Creates a proxy on aPath and connect it. 
+	"Creates a proxy on aPath and connect it.
 	 This is a convenience method."
-	 
-	^ (self on: aPath) 
-		connect; 
+
+	^ (self on: aPath)
+		connect;
 		yourself.
 !
 
@@ -197,8 +197,8 @@ isResolved
 !TDAction class methodsFor: 'instance creation'!
 
 on: aPromise
-	^ self new 
-		promise: aPromise; 
+	^ self new
+		promise: aPromise;
 		yourself
 ! !
 
@@ -253,18 +253,18 @@ requestUrl: aString
 
 handleError: anError
 	self beFailure.
-	self promise errorHandler 
+	self promise errorHandler
 		ifNotNil: [ :handler | handler failure: anError ]
 		ifNil: [ anError signal ]
 !
 
 requestError: anObject
 	| error |
-	
+
 	error := TDRequestError new
 		xhr: anObject;
 		yourself.
-		
+
 	self handleError: error
 !
 
@@ -281,12 +281,12 @@ newClientFromJson: json
 serverErrorFromJson: json
 	| serverError error |
 
-	serverError := json asTideObject.	
-	error := TDServerError new 
+	serverError := json asTideObject.
+	error := TDServerError new
 		code: serverError code;
 		messageText: serverError messageText;
 		yourself.
-		
+
 	self handleError: error
 !
 
@@ -300,12 +300,13 @@ handleResponse: json status: aNumber
 	aNumber == 200 ifTrue: [ ^ self updateClientFromJson: json ].
 	aNumber == 201 ifTrue: [ ^ self newClientFromJson: json ].
 	aNumber == 202 ifTrue: [ ^ self serverErrorFromJson: json ].
-	
+
 	self error: 'Invalid server answer code'.
 !
 
 request: aString
-	jQuery 
+
+	jQuery
 		ajax: self requestUrl
 		options: #{
 			'type' -> 'POST'.
@@ -315,7 +316,7 @@ request: aString
 				self handleResponse: json status: xhr status.
 				self beResolved ].
 			'error' -> [ :ex |
-				ex status = 408 
+				ex status = 408
 					ifTrue: [ self sessionError ]
 					ifFalse: [ self requestError: ex ] ]
 		}
@@ -331,13 +332,13 @@ Object subclass: #TDAsyncPromiseFailureHandler
 
 !TDAsyncPromiseFailureHandler methodsFor: 'accessing'!
 
-action 
+action
 	^ action
 ! !
 
 !TDAsyncPromiseFailureHandler methodsFor: 'initialization'!
 
-initializeAction: aBlock  
+initializeAction: aBlock
 	self initialize.
 	action := aBlock.
 ! !
@@ -350,13 +351,13 @@ failure: anError
 
 !TDAsyncPromiseFailureHandler class methodsFor: 'instance creation'!
 
-action: aBlock 
-	^ self basicNew 
+action: aBlock
+	^ self basicNew
 		initializeAction: aBlock;
 		yourself
 !
 
-new 
+new
 	^ self error: 'Use #action:'
 ! !
 
@@ -381,7 +382,7 @@ future
 
 	promise := TDPromise on: self.
 
-	firstPromise 
+	firstPromise
 		ifNil: [ firstPromise := promise ]
 		ifNotNil: [ firstPromise next: promise ].
 
@@ -431,12 +432,12 @@ promiseNotFound: aSelector
 handleFutureMessage: aMessage
 	| selector |
 	selector := aMessage selector asString.
-	
-	state 
-		at: selector 
+
+	state
+		at: selector
 		ifPresent: [ :value | ^ value ].
 
-	(actions at: selector) 
+	(actions at: selector)
 		ifNotNil: [ ^ self future setRequestActionFromMessage: aMessage ].
 
 	^ self promiseNotFound: aMessage selector
@@ -455,7 +456,7 @@ connect
 initialize
 	super initialize.
 	"Primitive JS object. I need it because I'm keeping JSON data"
-	state := self newJavaScriptObject. 
+	state := self newJavaScriptObject.
 	actions := self newJavaScriptObject
 ! !
 
@@ -489,9 +490,9 @@ updateActions: aDictionary
 
 updateFromJson: json
 	connected := true.
-	
+
 	id := json at: '__id__'.
-	
+
 	(json at: 'state') ifNotNil: [
 		json state keysAndValuesDo: [ :key :value |
 			state at: key put: value asTideObject ] ].
@@ -556,11 +557,11 @@ next
 !
 
 next: aPromise
-	next 
-		ifNil: [ 
-			next := aPromise. 
+	next
+		ifNil: [
+			next := aPromise.
 			aPromise previous: self ]
-		ifNotNil: [ 
+		ifNotNil: [
 			next next: aPromise ]
 !
 
@@ -582,7 +583,7 @@ setAction: anAction
 setRequestActionFromMessage: aMessage
 	| url data |
 	url := self client actions at: aMessage selector.
-	data := JSON stringify: ((aMessage arguments ifNil: [ #() ]) 
+	data := JSON stringify: ((aMessage arguments ifNil: [ #() ])
 		collect: [ :each | each asTideArgument ]).
 	self setAction: ((TDRequestAction on: self)
 		requestUrl: url;
@@ -624,19 +625,19 @@ isResolved
 !TDPromise methodsFor: 'traveling'!
 
 nextTravel
-	self next 
+	self next
 		ifNil: [ self client flushPromises ]
 		ifNotNil: [ self next stepTravel ]
 !
 
 stepTravel
-	self action 
+	self action
 		ifNil: [ self nextTravel ]
 		ifNotNil: [ self action resolve ]
 !
 
 travel
-	(self previous isNil or: [ self previous isResolved ]) 
+	(self previous isNil or: [ self previous isResolved ])
 		ifTrue: [ self stepTravel ]
 ! !
 
@@ -644,17 +645,17 @@ TDPromise class instanceVariableNames: 'errorHandler'!
 
 !TDPromise class methodsFor: 'accessing'!
 
-errorHandler 
+errorHandler
 	^ errorHandler
 !
 
-errorHandler: anErrorHandler 
+errorHandler: anErrorHandler
 	errorHandler := anErrorHandler
 !
 
 use: anErrorHandler during: aBlock
 	| oldErrorHandler |
-	
+
 	oldErrorHandler := self errorHandler.
 	self errorHandler: anErrorHandler.
 	aBlock ensure: [ self errorHandler: oldErrorHandler ]
@@ -730,9 +731,9 @@ onPromiseFailureDo: failureBlock
 asTideObject
 	| dictionary |
 	dictionary := self class new.
-	self keysAndValuesDo: [ :key :value | 
+	self keysAndValuesDo: [ :key :value |
 		dictionary at: key put: value asTideObject ].
-		
+
 	^ dictionary
 ! !
 
