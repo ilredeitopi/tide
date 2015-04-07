@@ -9,3 +9,5 @@ testIncrease
 		post.
 	self checkSuccess.
 	self checkStatus: 200.
+	
+	self assert: client response cookies isNotEmpty.
