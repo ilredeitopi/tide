@@ -1,0 +1,19 @@
+{
+	"class" : {
+		"host" : "TommasoDalSasso 4/3/2015 16:49",
+		"path" : "TommasoDalSasso 4/3/2015 17:36",
+		"port" : "TommasoDalSasso 4/3/2015 17:35",
+		"url" : "TommasoDalSasso 4/3/2015 16:17" },
+	"instance" : {
+		"checkStatus:" : "TommasoDalSasso 4/3/2015 18:08",
+		"checkSuccess" : "TommasoDalSasso 4/3/2015 18:25",
+		"connect" : "TommasoDalSasso 4/3/2015 17:48",
+		"setUp" : "TommasoDalSasso 4/5/2015 23:21",
+		"tearDown" : "TommasoDalSasso 4/5/2015 23:22",
+		"testAction" : "TommasoDalSasso 4/7/2015 13:53",
+		"testConnect" : "TommasoDalSasso 4/3/2015 18:25",
+		"testIncrease" : "TommasoDalSasso 4/6/2015 00:47",
+		"testSessionCookie" : "TommasoDalSasso 4/7/2015 11:20",
+		"testState" : "TommasoDalSasso 4/3/2015 18:29",
+		"useCookies" : "TommasoDalSasso 4/5/2015 23:51",
+		"useCookies:" : "TommasoDalSasso 4/5/2015 23:21" } }

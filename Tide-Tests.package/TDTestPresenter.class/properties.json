@@ -1,0 +1,14 @@
+{
+	"category" : "Tide-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"counter" ],
+	"name" : "TDTestPresenter",
+	"pools" : [
+		 ],
+	"super" : "TDPresenter",
+	"type" : "normal" }

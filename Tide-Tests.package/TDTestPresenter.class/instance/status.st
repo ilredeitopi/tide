@@ -1,0 +1,5 @@
+accessing
+status
+	<state>
+	
+	^ counter

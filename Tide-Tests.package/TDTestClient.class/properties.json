@@ -1,0 +1,15 @@
+{
+	"category" : "Tide-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"client",
+		"useCookies" ],
+	"name" : "TDTestClient",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

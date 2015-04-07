@@ -1,0 +1,4 @@
+accessing
+host
+
+	^ NetNameResolver loopBackName

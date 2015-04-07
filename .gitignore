@@ -3,3 +3,4 @@ bower_components
 Pharo*
 PharoDebug.log
 /readme.html
+.DS_Store
